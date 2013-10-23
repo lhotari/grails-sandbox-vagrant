@@ -1,0 +1,4 @@
+# source this file to the current shell inside the VM
+# . /vagrant/use_grails-home-mount
+export GRAILS_HOME=/vagrant/grails-home-mount
+export PATH="$GRAILS_HOME/bin:$PATH"
