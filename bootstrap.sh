@@ -19,7 +19,14 @@ EOF
   apt-get update
  
   # install dkms for autoupgrading kernel modules
-  apt-get install -y --force-yes dkms linux-headers-generic dpkg apt
+  apt-get install -y --force-yes dkms linux-headers-generic dpkg apt ethtool
+
+  # configure ethtool , disable tcp offloading in virtual ethernet adapter
+cat >> /etc/network/interfaces <<EOF2
+post-up /sbin/ethtool --offload eth0 gso off tso off sg off gro off || true
+pre-up /sbin/ethtool --offload eth0 gso off tso off sg off gro off || true
+EOF2
+  /sbin/ethtool --offload eth0 gso off tso off sg off gro off
 
   # upgrade all packages
   apt-get upgrade -q -y --force-yes
