@@ -9,8 +9,9 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 5005, host: 25005
   config.vm.provider :virtualbox do |vb|
     vb.gui = true  
-    vb.customize ["modifyvm", :id, "--memory", "2048"]
-    vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
+    vb.customize ["modifyvm", :id, "--memory", "2048", "--vram", 32, "--cpus", 1]
+    vb.customize ["modifyvm", :id, "--nictype1", "82545EM"]
+    vb.customize ["modifyvm", :id, "--natsettings1", "0,400,400,0,0"]
   end
   # don't auto-update guest additions
   config.vbguest.auto_update = false

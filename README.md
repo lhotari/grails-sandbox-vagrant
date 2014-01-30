@@ -6,17 +6,22 @@ I use a VM for running test apps from Grails Jira issues in a sandbox.
 
 Requirements:
 * Vagrant 1.1 or newer, see http://docs.vagrantup.com/v2/installation/
-* apt-cacher-ng or other http proxy for caching deb updates (running on port 3142)
+* http proxy for caching deb updates (running on port 3128)
 * vagrant vbguest plugin
 
 To install vagrant vbguest plugin:
-`vagrant vbguest --do install -R`
+`vagrant plugin install vagrant-vbguest`
 
-To install apt-cacher-ng on Ubuntu host:
-`sudo apt-get install apt-cacher-ng`
-allow GVM to use the same proxy for caching Grails download:
-`echo "PfilePattern = .*" | sudo tee -a /etc/apt-cacher-ng/acng.conf`
-make sure you protect your host with a firewall (`sudo ufw enable`) since apt-cacher-ng is open to all by default.
+To install squid 2.7 on MacOSX host:
+```
+brew install homebrew/versions/squid2
+cp squid-config/storeurl-rewrite.py /usr/local/etc
+cp squid-config/squid.conf /usr/local/opt/squid2/etc/squid.conf
+echo "visible_hostname `hostname`" >> /usr/local/opt/squid2/etc/squid.conf
+cp squid-config/homebrew.mxcl.squid2.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.squid2.plist
+```
+squid3 doesn't support store url rewriting that is required for caching Java downloads.
 
 First usage:
 ```

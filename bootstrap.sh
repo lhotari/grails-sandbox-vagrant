@@ -2,7 +2,7 @@
 
 # use apt-cacher-ng proxy on host (default Vbox NAT ip 10.0.2.2)
 # Add line "PfilePattern = .*" to /etc/apt-cacher-ng/acng.conf
-HTTP_PROXY=http://10.0.2.2:3142
+HTTP_PROXY=http://10.0.2.2:3128
 
 set -x
 export DEBIAN_FRONTEND=noninteractive
@@ -12,7 +12,6 @@ if [ ! -e "/home/vagrant/.firstboot" ]; then
   perl -i -p -e 's/\/\/us\./\/\/fi./g' /etc/apt/sources.list
 cat > /etc/apt/apt.conf.d/01proxy <<EOF
 Acquire::http::Proxy "$HTTP_PROXY";
-Acquire::HTTP::Proxy::download.oracle.com "DIRECT";
 EOF
   # remove ufw firewall
   dpkg --purge ufw
@@ -20,9 +19,10 @@ EOF
   apt-get update
  
   # install dkms for autoupgrading kernel modules
-  apt-get install -y --force-yes dkms linux-headers-generic
+  apt-get install -y --force-yes dkms linux-headers-generic dpkg apt
 
   # upgrade all packages
+  apt-get upgrade -q -y --force-yes
   apt-get dist-upgrade -q -y --force-yes
 
   # install required packages
