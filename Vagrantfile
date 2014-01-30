@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     vb.gui = true  
     vb.customize ["modifyvm", :id, "--memory", "2048", "--vram", 32, "--cpus", 1]
     vb.customize ["modifyvm", :id, "--nictype1", "82545EM"]
-    vb.customize ["modifyvm", :id, "--natsettings1", "0,400,400,0,0"]
+    vb.customize ["modifyvm", :id, "--natsettings1", "1500,1024,1024,1024,1024"]
   end
   # don't auto-update guest additions
   config.vbguest.auto_update = false
