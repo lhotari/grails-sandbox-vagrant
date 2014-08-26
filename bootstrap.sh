@@ -22,7 +22,7 @@ EOF
   apt-get install -y --force-yes dkms linux-headers-generic dpkg apt ethtool
 
   # configure ethtool , disable tcp offloading in virtual ethernet adapter
-cat >> /etc/network/interfaces <<EOF2
+cat >> /etc/network/interfaces.d/eth0.cfg <<EOF2
 post-up /sbin/ethtool --offload eth0 gso off tso off sg off gro off || true
 pre-up /sbin/ethtool --offload eth0 gso off tso off sg off gro off || true
 EOF2
