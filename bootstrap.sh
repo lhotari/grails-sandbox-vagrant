@@ -32,7 +32,7 @@ EOF2
   apt-get dist-upgrade -q -y --force-yes
 
   # install required packages
-  apt-get install -y --force-yes vim acpid software-properties-common curl unzip python-software-properties
+  apt-get install -y --force-yes vim acpid software-properties-common curl unzip python-software-properties git
 
   # java 7
   add-apt-repository ppa:webupd8team/java
