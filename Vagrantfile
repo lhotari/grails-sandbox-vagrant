@@ -1,6 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 Vagrant.configure("2") do |config|
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+    config.cache.enable :generic, {
+      "oracle-jdk7-installer" => { cache_dir: "/var/cache/oracle-jdk7-installer" },
+      "gvm" => { cache_dir: "/home/vagrant/.gvm/archives" },
+    }
+    config.cache.enable :apt
+    config.cache.enable :apt_lists
+  end
   config.vm.hostname = "grails-vagrant"
   config.vm.box = "ubuntu/trusty64"
   config.vm.provision :shell, :path => "bootstrap.sh"
